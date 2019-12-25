@@ -76,6 +76,21 @@ public class CourseRepoTest {
 		assertNull(course);
 	}
 	
+	@Test
+	public void testFindAllCoursesByNativeQuery() {
+		List courses = courseRepo.findAllCoursesByNativeQuery();
+		assertNotNull(courses);
+		assertEquals(4, courses.size());
+		logger.info("All Courses from Basic Native Query -> {}", courses);
+	}
+	
+	@Test
+	public void testFindCourseWithNativeQueryWithParameter() {
+		List courses = courseRepo.findCourseWithNativeQueryWithParameter(1000L);
+		assertNotNull(courses);
+		assertEquals(1, courses.size());
+		logger.info("Course from Paramterized Native Query -> {}", courses);
+	}
 	
 
 }

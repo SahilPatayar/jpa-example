@@ -42,7 +42,16 @@ public class CourseRepo {
 		return typedQuery.getResultList();
 	}
 	
+	public List findAllCoursesByNativeQuery() {
+		Query query = em.createNativeQuery("select * from course");
+		return query.getResultList();
+	}
 	
+	public List findCourseWithNativeQueryWithParameter(Long courseId) {
+		Query query = em.createNativeQuery("select * from course where id = :id", Course.class);
+		query.setParameter("id", courseId);
+		return query.getResultList();
+	}
 	
 	@Transactional
 	public void deleteById(Long id) {
