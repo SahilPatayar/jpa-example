@@ -33,12 +33,12 @@ public class CourseRepo {
 	}
 	
 	public List findAllCoursesByQuery() {
-		Query query = em.createQuery("select c from Course c");
+		Query query = em.createNamedQuery("get_all_courses");
 		return query.getResultList();
 	}
 	
 	public List<Course> findAllCoursesByTypedQuery() {
-		TypedQuery<Course> typedQuery = em.createQuery("select c from Course c", Course.class);
+		TypedQuery<Course> typedQuery = em.createNamedQuery("get_all_courses", Course.class);
 		return typedQuery.getResultList();
 	}
 	

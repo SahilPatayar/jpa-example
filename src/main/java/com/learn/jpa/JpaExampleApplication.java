@@ -23,18 +23,18 @@ public class JpaExampleApplication implements CommandLineRunner {
 	}
 
 	public void run(String... args) throws Exception {
-		Course c = new Course();
-		c.setName("New C1");		
-		courseRepository.save(c);
-		
-		Course c2 = new Course();
-		c2.setName("New C2");		
-		courseRepository.save(c2);
-		
-		Thread.sleep(5000);
-		
-		c2.setName("New C2 - Updated");	
-		courseRepository.save(c2);
+//		Course c = new Course();
+//		c.setName("New C1");		
+//		courseRepository.save(c);
+//		
+//		Course c2 = new Course();
+//		c2.setName("New C2");		
+//		courseRepository.save(c2);
+//		
+//		Thread.sleep(5000);
+//		
+//		c2.setName("New C2 - Updated");	
+//		courseRepository.save(c2);
 		logger.info("Finding all courses {} ", courseRepository.findAllCoursesByTypedQuery());		
 	}
 
