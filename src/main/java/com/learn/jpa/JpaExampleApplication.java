@@ -35,7 +35,7 @@ public class JpaExampleApplication implements CommandLineRunner {
 //		
 //		c2.setName("New C2 - Updated");	
 //		courseRepository.save(c2);
-		logger.info("Finding all courses {} ", courseRepository.findAllCoursesByTypedQuery());		
+//      logger.info("Finding all courses {} ", courseRepository.findAllCoursesByTypedQuery());		
 	}
 
 }
