@@ -4,7 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.Arrays;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +19,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.learn.jpa.entity.Course;
+import com.learn.jpa.entity.Review;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -71,8 +75,8 @@ public class CourseRepoTest {
 	@Test
 	@DirtiesContext
 	public void testDeleteById() {
-		courseRepo.deleteById(1000L);
-		Course course = courseRepo.findById(1000L);
+		courseRepo.deleteById(1001L);
+		Course course = courseRepo.findById(1001L);
 		assertNull(course);
 	}
 	
@@ -92,5 +96,35 @@ public class CourseRepoTest {
 		logger.info("Course from Paramterized Native Query -> {}", courses);
 	}
 	
+	@Test
+	@Transactional
+	public void testFindCourseWithReviews() {
+		Course course = courseRepo.findById(1000L);
+		assertNotNull(course);
+		assertEquals(1000L, course.getId());
+		
+		List<Review> reviews = course.getReviews();
+		assertNotNull(reviews);		
+		assertEquals(3, reviews.size());
+	}
+	
+	@Test
+	@DirtiesContext
+	public void testSaveReviews() {
+		Review review1 = new Review();
+		review1.setDescription("Excellent Course");
+		review1.setRating(5);
+		
+		Review review2 = new Review();
+		review2.setDescription("Didn't like the course");
+		review2.setRating(1);
+		
+		courseRepo.saveReviews(1002L, Arrays.asList(review1, review2));
+		
+		List<Review> reviews = courseRepo.findAllReviews(1002L);
+		
+		assertNotNull(reviews);
+		assertEquals(2, reviews.size());		
+	}
 
 }

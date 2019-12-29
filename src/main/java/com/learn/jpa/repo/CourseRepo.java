@@ -7,16 +7,25 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.learn.jpa.entity.Course;
+import com.learn.jpa.entity.Review;
+import com.learn.jpa.entity.Student;
 
 @Repository
 public class CourseRepo {
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private EntityManager em;
+	
+	@Autowired
+	private StudentRepository studentRepository;
 	
 	@Transactional
 	public void save(Course course) {
@@ -58,5 +67,40 @@ public class CourseRepo {
 		Course course = findById(id);
 		em.remove(course);
 	}
+	
+	@Transactional
+	public void saveReviews(Long courseId, List<Review> reviews) {
+		Course course = findById(courseId);
+		logger.info("Reviews -> {}", course.getReviews());
+		
+		for(Review review : reviews) {
+			review.setCourse(course);
+			em.persist(review);
+		}		
+	}
+	
+	@Transactional
+	public List<Review> findAllReviews(Long courseId) {
+		Course course = findById(courseId);
+		List<Review> reviews = course.getReviews();
+		logger.info("Reviews -> {}", reviews);
+		return reviews;
+	}
+	
+	@Transactional
+	public void addStudentsToCourse(Long courseId, Long studentId) {
+		Course course = findById(courseId);
+		Student student = studentRepository.findStudentById(studentId);
+		//logger.info("Course students -> {}", course.getStudents());
+		
+		// logger.info("Student courses -> {}", student.getCourses());
+		
+		course.addStudent(student);
+		student.addCourse(course);
+		em.merge(course);
+		
+	}
+	
+	
 	
 }

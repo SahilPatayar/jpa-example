@@ -2,8 +2,10 @@ package com.learn.jpa.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +21,9 @@ public class Review {
 	
 	@Column(name = "DESCRIPTION", nullable = true)
 	private String description;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Course course;
 
 	public Long getId() {
 		return id;
@@ -47,6 +52,14 @@ public class Review {
 	@Override
 	public String toString() {
 		return "Review [id=" + id + ", rating=" + rating + ", description=" + description + "]";
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 }

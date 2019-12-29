@@ -1,10 +1,14 @@
 package com.learn.jpa.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -27,6 +31,10 @@ public class Student {
 	@OneToOne(fetch = FetchType.LAZY)
 	@LazyToOne(LazyToOneOption.NO_PROXY)
 	private Passport passport;
+	
+	// Mapped by should be on the non-owning side of relationship
+	@ManyToMany(mappedBy = "students")
+	private Set<Course> courses = new HashSet();
 
 	public Long getId() {
 		return id;
@@ -57,6 +65,17 @@ public class Student {
 		this.passport = passport;
 	}
 
+	public Set<Course> getCourses() {
+		return courses;
+	}
+
+	public void addCourse(Course course) {
+		this.courses.add(course);
+	}
+	
+	public void removeCourse(Course course) {
+		this.courses.remove(course);
+	}
 
 	@Override
 	public String toString() {

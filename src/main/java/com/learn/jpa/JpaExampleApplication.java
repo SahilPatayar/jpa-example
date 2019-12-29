@@ -8,7 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.learn.jpa.entity.Course;
+import com.learn.jpa.entity.Student;
 import com.learn.jpa.repo.CourseRepo;
+import com.learn.jpa.repo.StudentRepository;
 
 @SpringBootApplication
 public class JpaExampleApplication implements CommandLineRunner {
@@ -17,6 +19,9 @@ public class JpaExampleApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CourseRepo courseRepository;
+	
+	@Autowired
+	private StudentRepository studentRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaExampleApplication.class, args);
@@ -35,7 +40,10 @@ public class JpaExampleApplication implements CommandLineRunner {
 //		
 //		c2.setName("New C2 - Updated");	
 //		courseRepository.save(c2);
-//      logger.info("Finding all courses {} ", courseRepository.findAllCoursesByTypedQuery());		
+//      logger.info("Finding all courses {} ", courseRepository.findAllCoursesByTypedQuery());	
+		
+		
+		courseRepository.addStudentsToCourse(1000L, 2003L);		
 	}
 
 }
