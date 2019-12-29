@@ -22,6 +22,10 @@ public class StudentRepository {
 		return em.find(Student.class, id);
 	}
 	
+	public Passport findPassportById(Long id) {
+		return em.find(Passport.class, id);
+	}
+	
 	public Student findStudentByName(String name) {
 		Query query = em.createNamedQuery("get_student_by_name", Student.class);
 		query.setParameter("studentName", name);		

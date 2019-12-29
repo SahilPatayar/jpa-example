@@ -2,11 +2,15 @@ package com.learn.jpa.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 @Entity
 @Table(name = "STUDENT")
@@ -20,7 +24,8 @@ public class Student {
 	@Column(name = "NAME", nullable = true)
 	private String name;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
+	@LazyToOne(LazyToOneOption.NO_PROXY)
 	private Passport passport;
 
 	public Long getId() {

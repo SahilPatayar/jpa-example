@@ -52,6 +52,25 @@ public class StudentRepositoryTest {
 
 	@Test
 	public void testFindStudentById() {
+		Student student = studentRepository.findStudentById(2000L);
+		
+		assertNotNull(student);
+		assertEquals(2000L, student.getId());
+		
+		Passport passport = student.getPassport();
+		assertNotNull(passport);
+		assertEquals(3000L, passport.getId());		
+	}
+	
+	@Test
+	public void testFindPassportById() {
+		Passport passport = studentRepository.findPassportById(3000L);
+		assertNotNull(passport);
+		assertEquals(3000L, passport.getId());	
+		
+		Student student = passport.getStudent();
+		assertNotNull(student);
+		assertEquals(2000L, student.getId());			
 	}
 	
 	@Test
